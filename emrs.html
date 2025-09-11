@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMRS Tansar - CBSE Affiliated</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #004aad, #1e3a8a);
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 74, 173, 0.5);
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/rice-paper.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 700;
+            margin: 0;
+            color: #ffd700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4), -1px -1px 2px rgba(255, 255, 255, 0.2);
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            line-height: 1.2;
+            word-break: break-word;
+            max-width: 90%;
+            display: block;
+        }
+        header p {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: #fff;
+            margin-top: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        header .logo-container {
+            position: absolute;
+            top: 10px;
+            left: 8px;
+            display: flex;
+            align-items: center;
+        }
+        header .saraswati-container {
+            position: absolute;
+            top: 10px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+        }
+        header .menu-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+        }
+        header img.logo, header img.saraswati {
+            width: clamp(60px, 8vw, 120px);
+            height: clamp(60px, 8vw, 120px);
+            border-radius: 30%;
+            object-fit: cover;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-right: 10px;
+        }
+        header img.logo:hover, header img.saraswati:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffd700;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            background: none;
+            border: none;
+            color: #ffd700;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .nav-menu {
+            background: linear-gradient(90deg, #004aad, #1e3a8a);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 74, 173, 0.4);
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        .nav-menu li {
+            margin: 0 clamp(10px, 2vw, 20px);
+            position: relative;
+        }
+        .nav-menu a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
+            transition: color 0.3s, transform 0.3s;
+        }
+        .nav-menu a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px #fff;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1e3a8a;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 74, 173, 0.5);
+            min-width: 180px;
+            z-index: 100;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .nav-menu li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            display: block;
+            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
+            color: #ffd700;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            transition: background 0.3s;
+        }
+        .dropdown a:hover {
+            background: #003087;
+            color: #fff;
+        }
+        .hero {
+            background: linear-gradient(rgba(0, 74, 173, 0.7), rgba(0, 74, 173, 0.7)), url('https://via.placeholder.com/1200x400');
+            background-size: cover;
+            background-position: center;
+            height: clamp(250px, 40vw, 400px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ffd700;
+            text-shadow: 0 0 15px #004aad;
+            animation: bounceIn 1.5s ease-out;
+            z-index: 1;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/rice-paper.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .section {
+            padding: clamp(20px, 5vw, 50px) clamp(10px, 2vw, 20px);
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: clamp(20px, 3vw, 30px);
+            box-shadow: 0 4px 20px rgba(0, 74, 173, 0.1);
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        .section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            color: #004aad;
+            margin-bottom: clamp(10px, 2vw, 20px);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .sub-section {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9fafb;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s;
+        }
+        .sub-section:hover {
+            box-shadow: 0 0 15px rgba(0, 74, 173, 0.2);
+        }
+        .announcements, .disclosure {
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 74, 173, 0.2);
+        }
+        .announcements ul, .disclosure ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .announcements li, .disclosure li {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.3s;
+        }
+        .announcements li:hover, .disclosure li:hover {
+            background: #f0f2f5;
+        }
+        .disclosure a {
+            color: #004aad;
+            text-decoration: none;
+        }
+        .disclosure a:hover {
+            color: #ffd700;
+            text-shadow: 0 0 5px #ffd700;
+        }
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .staff-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 74, 173, 0.2);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .staff-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 74, 173, 0.4);
+        }
+        .staff-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        .staff-card h3 {
+            margin: 10px 0;
+            font-size: 1.3em;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(90deg, #004aad, #6b7280);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .staff-card p {
+            margin: 5px 0;
+            font-size: 1em;
+            color: #555;
+        }
+        .contact-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 74, 173, 0.2);
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            background: #f9fafb;
+            color: #333;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #004aad;
+            outline: none;
+        }
+        .contact-form button {
+            background: linear-gradient(45deg, #004aad, #1e3a8a);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #ffd700;
+            font-size: 1.1em;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .contact-form button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #1e3a8a, #004aad);
+        }
+        footer {
+            background: linear-gradient(90deg, #004aad, #1e3a8a);
+            padding: 20px;
+            text-align: center;
+            color: #ffd700;
+            box-shadow: 0 -4px 10px rgba(0, 74, 173, 0.3);
+            margin-top: 30px;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: #1e3a8a;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu li {
+                margin: clamp(5px, 2vw, 10px) 0;
+                text-align: center;
+            }
+            .dropdown {
+                position: static;
+                background: #003087;
+                box-shadow: none;
+            }
+            .hero {
+                height: clamp(200px, 30vw, 250px);
+            }
+            .hero h2 {
+                font-size: clamp(1.5rem, 4vw, 2em);
+            }
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: clamp(1.2rem, 6vw, 1.8rem);
+            }
+            header img.logo, header img.saraswati {
+                width: clamp(25px, 5vw, 40px);
+                height: clamp(25px, 5vw, 40px);
+                top: 5px;
+            }
+            header .logo-container, header .saraswati-container, header .menu-container {
+                top: 5px;
+            }
+            .section {
+                padding: clamp(15px, 4vw, 20px);
+            }
+            .section h2 {
+                font-size: clamp(1.5rem, 4vw, 2em);
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            header h1 {
+                font-size: clamp(1.8rem, 4vw, 2.6rem);
+            }
+            header img.logo, header img.saraswati {
+                width: clamp(40px, 5vw, 60px);
+                height: clamp(40px, 5vw, 60px);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSahUGykh2riOuvT9dl_XjBNCA2ECP1LubS18YxSx7Sapdj7qejEIL2kjSx&s=10" alt="School Logo" class="logo" onerror="this.style.display='none';">
+        </div>
+        <div>
+            <h1>EKLAVYA MODEL RESIDENTIAL SCHOOL TANSAR SIDHI (M.P.)</h1>
+            <p>Affiliated to CBSE, New Delhi | Affiliation No: 1020011</p>
+        </div>
+        <div class="saraswati-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1l8at_zIBbKFmh7yBZnzkwJ6NzHBnWzg_ZvnYmaHcNhwrmcAO6l4wKsEH&s=10" alt="Mata Saraswati" class="saraswati" onerror="this.style.display='none';">
+        </div>
+        <div class="menu-container">
+            <button class="nav-toggle" onclick="toggleMenu()">&#9776;</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li>
+                <a href="#about">About Us</a>
+                <div class="dropdown">
+                    <a href="#vision">Vision</a>
+                    <a href="#mission">Mission</a>
+                    <a href="#principal-message">Principal’s Message</a>
+                    <a href="#affiliation">Affiliation</a>
+                </div>
+            </li>
+            <li>
+                <a href="#academics">Academics</a>
+                <div class="dropdown">
+                    <a href="#curriculum">Curriculum</a>
+                    <a href="#fee-structure">Fee Structure</a>
+                    <a href="#calendar">Academic Calendar</a>
+                    <a href="#circulars">CBSE Circulars</a>
+                </div>
+            </li>
+            <li>
+                <a href="#infrastructure">Infrastructure</a>
+                <div class="dropdown">
+                    <a href="#classrooms">Classrooms</a>
+                    <a href="#laboratories">Laboratories</a>
+                    <a href="#library">Library</a>
+                    <a href="#certificates">Certificates</a>
+                </div>
+            </li>
+            <li>
+                <a href="#staff">Staff</a>
+                <div class="dropdown">
+                    <a href="#teaching-staff" onclick="filterStaff('Teaching')">Teaching Staff</a>
+                    <a href="#non-teaching-staff" onclick="filterStaff('Non-Teaching')">Non-Teaching Staff</a>
+                </div>
+            </li>
+            <li>
+                <a href="#students">Students</a>
+                <div class="dropdown">
+                    <a href="#enrollment">Enrollment</a>
+                    <a href="#class-data">Class-wise Data</a>
+                    <a href="#transfer-certificates">Transfer Certificates</a>
+                </div>
+            </li>
+            <li><a href="#disclosure">Mandatory Disclosure</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h2>Empowering Future Leaders</h2>
+    </div>
+
+    <div class="section" id="home">
+        <h2>Welcome to Our School</h2>
+        <div class="sub-section">
+            <p>EMRS Tansar is committed to providing quality education as per CBSE guidelines, fostering holistic development and academic excellence.</p>
+        </div>
+    </div>
+
+    <div class="section" id="about">
+        <h2>About Us</h2>
+        <div class="sub-section" id="vision">
+            <h3>Vision</h3>
+            <p>To nurture responsible global citizens through quality education.</p>
+        </div>
+        <div class="sub-section" id="mission">
+            <h3>Mission</h3>
+            <p>To provide a dynamic learning environment with modern facilities.</p>
+        </div>
+        <div class="sub-section" id="principal-message">
+            <h3>Principal’s Message</h3>
+            <p>Welcome to Eklavya Model Residential School, Tansar, Sidhi (M.P.). Our aim is to provide quality education with values, discipline, and life skills, preparing students to become confident, responsible, and successful individuals.
+
+— (Rampal Singh), Principal</p>
+        </div>
+        <div class="sub-section" id="affiliation">
+            <h3>Affiliation</h3>
+            <p>CBSE Affiliation No: 1020011, Valid till: 2030</p>
+        </div>
+    </div>
+
+    <div class="section" id="academics">
+        <h2>Academics</h2>
+        <div class="sub-section" id="curriculum">
+            <h3>Curriculum</h3>
+            <p>CBSE curriculum for classes VI to XII.</p>
+        </div>
+        <div class="sub-section" id="fee-structure">
+            <h3>Fee Structure</h3>
+            <p>Available on request.</p>
+        </div>
+        <div class="sub-section" id="calendar">
+            <h3>Academic Calendar</h3>
+            <p><a href="#">View Calendar</a></p>
+        </div>
+        <div class="sub-section" id="circulars">
+            <h3>Latest CBSE Circulars</h3>
+            <p><a href="#">View Circulars</a></p>
+        </div>
+    </div>
+
+    <div class="section" id="infrastructure">
+        <h2>Infrastructure</h2>
+        <div class="sub-section" id="classrooms">
+            <h3>Classrooms</h3>
+            <p>30 spacious, smart classrooms.</p>
+        </div>
+        <div class="sub-section" id="laboratories">
+            <h3>Laboratories</h3>
+            <p>Physics, Chemistry, Biology, and Computer Labs.</p>
+        </div>
+        <div class="sub-section" id="library">
+            <h3>Library</h3>
+            <p>10,000+ books and digital resources.</p>
+        </div>
+        <div class="sub-section" id="certificates">
+            <h3>Certificates</h3>
+            <p><a href="#">Building Safety</a>, <a href="#">Fire Safety</a>, <a href="#">Sanitation</a></p>
+        </div>
+    </div>
+
+    <div class="section" id="staff">
+        <h2>Our Staff</h2>
+        <p><strong>Teacher-Student Ratio:</strong> 2:1</p>
+        <div class="staff-grid" id="staffList"></div>
+    </div>
+
+    <div class="section" id="students">
+        <h2>Students</h2>
+        <div class="sub-section" id="enrollment">
+            <h3>Total Enrollment</h3>
+            <p>400 students</p>
+        </div>
+        <div class="sub-section" id="class-data">
+            <h3>Class-wise Data</h3>
+            <p>Class 6th: 60, Class 7th: 60,Class 8th: 58,Class 9th: 64,Class 10th: 57,Class 11th: 54,Class 12th: 47</p>
+        </div>
+        <div class="sub-section" id="transfer-certificates">
+            <h3>Transfer Certificates</h3>
+            <p><a href="#">View Samples</a></p>
+        </div>
+    </div>
+
+    <div class="section" id="disclosure">
+        <h2>Mandatory Disclosure</h2>
+        <div class="disclosure">
+            <ul id="documentList"></ul>
+        </div>
+    </div>
+
+    <div class="section" id="contact">
+        <h2>Contact Us</h2>
+        <div class="sub-section">
+            <p><strong>Address:</strong> Tansar, Sidhi, Madhya Pradesh, 486669</p>
+            <p><strong>Email:</strong> akalavyatansar@gmail.com</p>
+            <p><strong>Phone:</strong> +91-780-123-4567</p>
+            <div class="contact-form">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Message" required></textarea>
+                <button type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section announcements">
+        <h2>Announcements</h2>
+        <ul id="announcementList"></ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EMRS Tansar. All Rights Reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore, collection, query, orderBy, where, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxJgFPLEN4ZRs0XaKBByPgVpUMsJSXH7E",
+            authDomain: "emrstansarschool.firebaseapp.com",
+            projectId: "emrstansarschool",
+            storageBucket: "emrstansarschool.firebasestorage.app",
+            messagingSenderId: "948981641661",
+            appId: "1:948981641661:web:fcf8f4341d08829d4662d4",
+            measurementId: "G-Z2CSSKCTS3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let currentCategory = '';
+
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            if (menu) {
+                menu.classList.toggle('active');
+                console.log('Menu toggled'); // Debug log
+            } else {
+                console.error('Nav menu not found');
+            }
+        }
+
+        function loadAnnouncements() {
+            console.log('Loading announcements...');
+            const q = query(collection(db, 'announcements'), orderBy('timestamp', 'desc'));
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('announcementList');
+                if (list) {
+                    list.innerHTML = '';
+                    snapshot.forEach(doc => {
+                        const li = document.createElement('li');
+                        li.textContent = doc.data().text || 'No text available';
+                        list.appendChild(li);
+                    });
+                    console.log('Announcements loaded:', snapshot.size);
+                } else {
+                    console.error('Announcement list not found');
+                }
+            }, (error) => {
+                console.error('Error loading announcements:', error);
+            });
+        }
+
+        function loadStaff(category = '') {
+            console.log('Loading staff...', category ? `Category: ${category}` : 'All');
+            let q = query(collection(db, 'staff'), orderBy('timestamp', 'desc'));
+            if (category) {
+                q = query(q, where('category', '==', category));
+            }
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('staffList');
+                if (list) {
+                    list.innerHTML = '';
+                    snapshot.forEach(doc => {
+                        const card = document.createElement('div');
+                        card.className = 'staff-card';
+                        card.innerHTML = `
+                            <img src="${doc.data().imageUrl || 'https://via.placeholder.com/120'}" alt="${doc.data().name || 'Staff'}">
+                            <h3>${doc.data().name || 'Unknown'}</h3>
+                            <p><strong>Qualification:</strong> ${doc.data().qualification || 'N/A'}</p>
+                            <p><strong>Designation:</strong> ${doc.data().designation || 'N/A'}</p>
+                            <p><strong>Subject:</strong> ${doc.data().subject || 'N/A'}</p>
+                        `;
+                        list.appendChild(card);
+                    });
+                    console.log('Staff loaded:', snapshot.size);
+                } else {
+                    console.error('Staff list not found');
+                }
+            }, (error) => {
+                console.error('Error loading staff:', error);
+            });
+        }
+
+        function filterStaff(category) {
+            currentCategory = category;
+            loadStaff(category);
+        }
+
+        function loadDocuments() {
+            console.log('Loading documents...');
+            const q = query(collection(db, 'documents'), orderBy('timestamp', 'desc'));
+            onSnapshot(q, (snapshot) => {
+                const list = document.getElementById('documentList');
+                if (list) {
+                    list.innerHTML = '';
+                    snapshot.forEach(doc => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="${doc.data().url || '#'}" target="_blank">${doc.data().name || 'Unnamed Document'}</a>`;
+                        list.appendChild(li);
+                    });
+                    console.log('Documents loaded:', snapshot.size);
+                } else {
+                    console.error('Document list not found');
+                }
+            }, (error) => {
+                console.error('Error loading documents:', error);
+            });
+        }
+
+        window.onload = function() {
+            console.log('Initializing page...');
+            loadAnnouncements();
+            loadStaff();
+            loadDocuments();
+
+            // Ensure menu toggle button exists and add event listener
+            const toggleButton = document.querySelector('.nav-toggle');
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleMenu);
+                console.log('Toggle button event listener added');
+            } else {
+                console.error('Toggle button not found');
+            }
+
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (!this.getAttribute('onclick')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            console.error('Target element not found:', targetId);
+                        }
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>
